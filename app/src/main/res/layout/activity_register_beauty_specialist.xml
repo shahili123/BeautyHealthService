@@ -176,6 +176,7 @@
                     <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:id="@+id/checkbox_hairstyle"
                         android:text="Hair Style"/>
 
 
@@ -183,6 +184,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
+                        android:id="@+id/checkbox_hairspa"
+
                         android:text="Hair Spa"/>
 
 
@@ -190,6 +193,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
+                        android:id="@+id/checkbox_colouring"
 
                         android:text="Colouring"/>
 
@@ -207,6 +211,8 @@
                     <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:id="@+id/checkbox_facial"
+
                         android:text="Facial"/>
 
 
@@ -214,6 +220,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
+                        android:id="@+id/checkbox_eyebrow"
+
                         android:text="Eyebrows"/>
 
 
@@ -221,6 +229,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
+                        android:id="@+id/checkbox_massage"
 
                         android:text="Massage"/>
 

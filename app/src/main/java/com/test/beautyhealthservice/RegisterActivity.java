@@ -34,7 +34,7 @@ import java.io.IOException;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private TextInputLayout txt_full_name,txt_email,txt_phone,txt_password;
+    private TextInputLayout txt_full_name,txt_email,txt_address,txt_password;
     private FirebaseAuth mAuth;
     private DatabaseReference databaseReference;
     private static final int PICK_IMAGE_REQUEST = 200;
@@ -53,7 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         txt_full_name=findViewById(R.id.txt_fname);
         txt_email=findViewById(R.id.txt_email);
-        txt_phone=findViewById(R.id.txt_ph);
+        txt_address=findViewById(R.id.txt_address);
         txt_password=findViewById(R.id.txt_password);
         user_image=findViewById(R.id.image_user);
         user_image.setOnClickListener(new View.OnClickListener() {
@@ -72,8 +72,8 @@ public class RegisterActivity extends AppCompatActivity {
                 if(txt_email.getEditText().getText().toString().equals("")){
                     txt_email.setError("Please enter email");
                 }
-                else  if(txt_phone.getEditText().getText().toString().equals("")){
-                    txt_phone.setError("Please enter phone number");
+                else  if(txt_address.getEditText().getText().toString().equals("")){
+                    txt_address.setError("Please enter address");
                 }
                 else  if(txt_password.getEditText().getText().toString().equals("")){
                     txt_password.setError("Please enter password");
@@ -108,7 +108,6 @@ public class RegisterActivity extends AppCompatActivity {
 
                             }
                         });
-                        CreateProfile();
                     }
                 }
             }
