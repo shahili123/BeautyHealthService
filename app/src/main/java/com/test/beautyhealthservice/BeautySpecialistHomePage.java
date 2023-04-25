@@ -24,7 +24,6 @@ public class BeautySpecialistHomePage extends AppCompatActivity {
             public void onClickItem(MeowBottomNavigation.Model item) {
             }
         });
-
         bottomNavigation.setOnShowListener(new MeowBottomNavigation.ShowListener() {
             @Override
             public void onShowItem(MeowBottomNavigation.Model item) {
