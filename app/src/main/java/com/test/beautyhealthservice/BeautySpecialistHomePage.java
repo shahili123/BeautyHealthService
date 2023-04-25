@@ -31,7 +31,6 @@ public class BeautySpecialistHomePage extends AppCompatActivity {
                 String name;
                 switch (item.getId()) {
                     case ID_SETTING:
-                        name = "HOME";
 
                         break;
                     case ID_MESSAGES:
@@ -44,7 +43,6 @@ public class BeautySpecialistHomePage extends AppCompatActivity {
 
                         break;
                     default:
-                        name = "";
                 }
 
             }
