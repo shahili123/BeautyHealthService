@@ -39,8 +39,6 @@ public class BeautySpecialistHomePage extends AppCompatActivity {
 
                         break;
                     case ID_PROFILE:
-
-
                         break;
                     default:
                 }
