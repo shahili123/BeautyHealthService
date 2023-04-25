@@ -22,20 +22,17 @@ public class BeautySpecialistHomePage extends AppCompatActivity {
         bottomNavigation.setOnClickMenuListener(new MeowBottomNavigation.ClickListener() {
             @Override
             public void onClickItem(MeowBottomNavigation.Model item) {
-                //    Toast.makeText(ActivityHome.this, "clicked item : " + item.getId(), Toast.LENGTH_SHORT).show();
             }
         });
 
         bottomNavigation.setOnShowListener(new MeowBottomNavigation.ShowListener() {
             @Override
             public void onShowItem(MeowBottomNavigation.Model item) {
-                //   Toast.makeText(ActivityHome.this, "showing item : " + item.getId(), Toast.LENGTH_SHORT).show();
 
                 String name;
                 switch (item.getId()) {
                     case ID_SETTING:
                         name = "HOME";
-                    //    changeFragment(fragment_map.newInstance("",""),"setting");
 
                         break;
                     case ID_MESSAGES:
@@ -57,7 +54,6 @@ public class BeautySpecialistHomePage extends AppCompatActivity {
         bottomNavigation.setOnReselectListener(new MeowBottomNavigation.ReselectListener() {
             @Override
             public void onReselectItem(MeowBottomNavigation.Model item) {
-                //    Toast.makeText(ActivityHome.this, "reselected item : " + item.getId(), Toast.LENGTH_SHORT).show();
             }
         });
         bottomNavigation.show(ID_SETTING,true);
