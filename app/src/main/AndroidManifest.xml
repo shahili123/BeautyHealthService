@@ -14,6 +14,9 @@
         android:theme="@style/Theme.BeautyHealthService"
         tools:targetApi="31">
         <activity
+            android:name=".BeautySpecialistHomePage"
+            android:exported="false" />
+        <activity
             android:name=".RegisterBeautySpecialistActivity"
             android:exported="false" />
         <activity
