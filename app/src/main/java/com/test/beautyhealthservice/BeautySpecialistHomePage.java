@@ -34,9 +34,6 @@ public class BeautySpecialistHomePage extends AppCompatActivity {
 
                         break;
                     case ID_MESSAGES:
-
-
-
                         break;
                     case ID_PROFILE:
                         break;
