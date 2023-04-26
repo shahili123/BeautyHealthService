@@ -1,10 +1,16 @@
 package com.test.beautyhealthservice;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
+import com.test.beautyhealthservice.Fragments.BeautySpecialistFragments.fragment_message;
+import com.test.beautyhealthservice.Fragments.BeautySpecialistFragments.fragment_profile;
+import com.test.beautyhealthservice.Fragments.BeautySpecialistFragments.fragment_setting;
 
 public class BeautySpecialistHomePage extends AppCompatActivity {
     private final static int ID_SETTING = 1;
@@ -31,11 +37,16 @@ public class BeautySpecialistHomePage extends AppCompatActivity {
                 String name;
                 switch (item.getId()) {
                     case ID_SETTING:
+                        changeFragment(fragment_setting.newInstance("",""),"setting");
 
                         break;
                     case ID_MESSAGES:
+                        changeFragment(fragment_message.newInstance("",""),"chats");
+
                         break;
                     case ID_PROFILE:
+                        changeFragment(fragment_profile.newInstance("",""),"profile");
+
                         break;
                     default:
                 }
@@ -50,5 +61,28 @@ public class BeautySpecialistHomePage extends AppCompatActivity {
         });
         bottomNavigation.show(ID_SETTING,true);
 
+    }
+
+    public void changeFragment(Fragment fragment, String tagFragmentName) {
+
+        FragmentManager mFragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+
+        Fragment currentFragment = mFragmentManager.getPrimaryNavigationFragment();
+        if (currentFragment != null) {
+            fragmentTransaction.hide(currentFragment);
+        }
+
+        Fragment fragmentTemp = mFragmentManager.findFragmentByTag(tagFragmentName);
+        if (fragmentTemp == null) {
+            fragmentTemp = fragment;
+            fragmentTransaction.add(R.id.container, fragmentTemp, tagFragmentName);
+        } else {
+            fragmentTransaction.show(fragmentTemp);
+        }
+
+        fragmentTransaction.setPrimaryNavigationFragment(fragmentTemp);
+        fragmentTransaction.setReorderingAllowed(true);
+        fragmentTransaction.commitNowAllowingStateLoss();
     }
 }
