@@ -1,5 +1,6 @@
 package com.test.beautyhealthservice;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -8,6 +9,9 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.test.beautyhealthservice.Fragments.BeautySpecialistFragments.fragment_message;
 import com.test.beautyhealthservice.Fragments.BeautySpecialistFragments.fragment_profile;
 import com.test.beautyhealthservice.Fragments.BeautySpecialistFragments.fragment_setting;
@@ -21,6 +25,7 @@ public class BeautySpecialistHomePage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beauty_specialist_home_page);
+
         bottomNavigation = findViewById(R.id.bottomNavigation);
         bottomNavigation.add(new MeowBottomNavigation.Model(ID_SETTING, R.drawable.ic_baseline_settings_24));
         bottomNavigation.add(new MeowBottomNavigation.Model(ID_MESSAGES, R.drawable.ic_baseline_message_24));

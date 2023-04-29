@@ -1,9 +1,15 @@
 package com.test.beautyhealthservice;
 
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
@@ -14,6 +20,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -41,7 +49,9 @@ public class RegisterActivity extends AppCompatActivity {
     ImageView user_image;
     private StorageReference storeage_reference;
     private Uri path;
-
+    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 100;
+    protected LocationManager locationManager;
+    private String latitude="",longitude="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +122,25 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         });
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            checkLocationPermission();
+        }
+        if (ContextCompat.checkSelfPermission(RegisterActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
+
+
+            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, new LocationListener() {
+                @Override
+                public void onLocationChanged(@NonNull Location location) {
+                    latitude=String.valueOf(location.getLatitude());
+                    longitude=String.valueOf(location.getLongitude());
+                    locationManager.removeUpdates(this);
+                }
+            });
+
+
+        }
 
     }
 
@@ -157,7 +185,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 public void onSuccess(Uri uri) {
                                     Uri downloadUrl = uri;
                                     String uploadId = databaseReference.push().getKey();
-                                    Users upload = new Users(uploadId,txt_full_name.getEditText().getText().toString().trim(),txt_email.getEditText().getText().toString(),txt_password.getEditText().getText().toString(),"","", downloadUrl.toString());
+                                    Users upload = new Users(uploadId,txt_full_name.getEditText().getText().toString().trim(),txt_email.getEditText().getText().toString(),txt_password.getEditText().getText().toString(),txt_address.getEditText().getText().toString(),latitude,longitude, downloadUrl.toString(),"user","");
                                     databaseReference.child(uploadId).setValue(upload);
                                     Toast.makeText(getApplicationContext(), "Account created successfully!", Toast.LENGTH_LONG).show();
                                     Helper.stopLoader();
@@ -180,5 +208,49 @@ public class RegisterActivity extends AppCompatActivity {
         } else {
         }
     }
+    public boolean checkLocationPermission() {
+        if (ContextCompat.checkSelfPermission(RegisterActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
+            if (ActivityCompat.shouldShowRequestPermissionRationale(RegisterActivity.this,
+                    android.Manifest.permission.ACCESS_FINE_LOCATION)) {
+                ActivityCompat.requestPermissions(RegisterActivity.this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_LOCATION);
+            } else {
+                ActivityCompat.requestPermissions(RegisterActivity.this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_LOCATION);
+            }
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_LOCATION: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if (ContextCompat.checkSelfPermission(RegisterActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+
+
+                        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, new LocationListener() {
+                            @Override
+                            public void onLocationChanged(@NonNull Location location) {
+                                latitude=String.valueOf(location.getLatitude());
+                                longitude=String.valueOf(location.getLongitude());
+
+                                locationManager.removeUpdates(this);
+                            }
+                        });
+
+
+                    }
+                } else {
+                    Toast.makeText(RegisterActivity.this, "Permission denied", Toast.LENGTH_LONG).show();
+                }
+                return;
+            }
+        }
+    }
 }
