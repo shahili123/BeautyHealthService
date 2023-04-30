@@ -48,6 +48,7 @@ public class viewholder_beauty_specialist extends RecyclerView.Adapter<viewholde
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(context, BeautySpecialistDetail.class);
                 intent.putExtra("id", beauty_specialist_list.get(position).getId());
                 intent.putExtra("name", beauty_specialist_list.get(position).getName());

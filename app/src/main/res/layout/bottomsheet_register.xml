@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+
+
+
+
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:id="@+id/btn_user"
+        android:textColorHint="@color/white"
+        android:paddingLeft="10dp"
+        android:textColor="@android:color/white"
+        android:singleLine="true"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/open_sans_bold"
+        android:textSize="15dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="50dp"
+        android:hint="User Register" />
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:id="@+id/btn_beauty"
+        android:textColorHint="@color/white"
+        android:paddingLeft="10dp"
+        android:textColor="@android:color/white"
+        android:singleLine="true"
+        android:fontFamily="@font/open_sans_bold"
+        android:textSize="15dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginRight="50dp"
+        android:hint="Beauty Specialist Register" />
+
+
+</LinearLayout>

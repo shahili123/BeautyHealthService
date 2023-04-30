@@ -5,32 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:elevation="10dp"
-        app:cardBackgroundColor="@color/purple_700">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:fontFamily="@font/open_sans_bold"
-                android:includeFontPadding="false"
-                android:text="My ChatBox"
-                android:textColor="@color/white"
-                android:textSize="18dp"
-                android:textStyle="bold"
-                android:typeface="sans" />
-
-
-
-        </RelativeLayout>
-    </androidx.cardview.widget.CardView>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width = "match_parent"

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "620186364896",
+    "firebase_url": "https://beautyhealthservice-fea12-default-rtdb.firebaseio.com",
+    "project_id": "beautyhealthservice-fea12",
+    "storage_bucket": "beautyhealthservice-fea12.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:620186364896:android:c92688821b74889d2f5985",
+        "android_client_info": {
+          "package_name": "com.test.beautyhealthservice"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "620186364896-n8nfaqb2k7qic8eric3vii52krgb4r40.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTG1gaOF_dhr1QTVOOSHAK7LHqAD1nJ5A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "620186364896-n8nfaqb2k7qic8eric3vii52krgb4r40.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -41,13 +41,21 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        getSupportActionBar().hide();
         checkLocationPermission();
         mAuth = FirebaseAuth.getInstance();
+
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
         if(Helper.GetData(LoginActivity.this,"user_id")!=null){
-            finish();
-            startActivity(new Intent(LoginActivity.this,MainActivity.class));
+
+            if(Helper.GetData(LoginActivity.this,"type").equals("user")){
+                finish();
+                startActivity(new Intent(LoginActivity.this,UserHomePage.class));
+            }
+            else{
+                finish();
+                startActivity(new Intent(LoginActivity.this,BeautySpecialistHomePage.class));
+            }
         }
         btn_login = (Button) findViewById(R.id.btn_signin);
         txt_email = (TextInputLayout) findViewById(R.id.txt_email);
@@ -94,7 +102,8 @@ public class LoginActivity extends AppCompatActivity {
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
+                RegisterModelSheet bottomSheet = new RegisterModelSheet();
+                bottomSheet.show(getSupportFragmentManager(), "ModalBottomSheet");
             }
         });
 
@@ -148,6 +157,7 @@ public class LoginActivity extends AppCompatActivity {
                         Helper.PutData(LoginActivity.this,"email",txt_email.getEditText().getText().toString());
                         Helper.PutData(LoginActivity.this,"user_id",childSnapshot.child("user_id").getValue(String.class));
                         Helper.PutData(LoginActivity.this,"type",childSnapshot.child("type").getValue(String.class));
+                        Helper.PutData(LoginActivity.this,"image_url",childSnapshot.child("image_url").getValue(String.class));
 
                         String type=childSnapshot.child("type").getValue(String.class);
                         if(type.equals("user")){

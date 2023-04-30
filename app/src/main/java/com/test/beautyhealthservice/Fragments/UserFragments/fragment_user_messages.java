@@ -17,7 +17,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.test.beautyhealthservice.ChatModule.Adapter.UserAdapter;
+import com.test.beautyhealthservice.ChatModule.Adapter.viewholder_user;
 import com.test.beautyhealthservice.Helper;
 import com.test.beautyhealthservice.R;
 import com.test.beautyhealthservice.Users;
@@ -34,7 +34,7 @@ public class fragment_user_messages extends Fragment
     private String mParam1;
     private String mParam2;
     ProgressBar progressBar;
-    UserAdapter userAdapter;
+    viewholder_user userAdapter;
     ArrayList<Users> list=new ArrayList<>();
 
     public fragment_user_messages()
@@ -106,7 +106,7 @@ public class fragment_user_messages extends Fragment
                 }
                 if(list.size()>0){
                     recyclerView.setVisibility(View.VISIBLE);
-                    userAdapter = new UserAdapter(getContext(), list, true);
+                    userAdapter = new viewholder_user(getContext(), list, true);
                     recyclerView.setAdapter(userAdapter);
                     progressBar.setVisibility(View.GONE);
                 }

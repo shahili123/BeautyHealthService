@@ -5,26 +5,28 @@ import java.util.ArrayList;
 public class BSpecialistModel {
 
 
-    String id,name,email,address,latitude,longitude,image;
+    String user_id,name,email,address,latitude,longitude,image,password,type;
     ArrayList<String> list_services=new ArrayList<>();
 
-    public BSpecialistModel(String id, String name, String email, String address,String image, String latitude, String longitude, ArrayList<String> list_services) {
-        this.id = id;
+    public BSpecialistModel(String user_id, String name, String email, String address, String latitude, String longitude,String password,String image, ArrayList<String> list_services,String type) {
+        this.user_id = user_id;
         this.name = name;
         this.email = email;
         this.address = address;
         this.latitude = latitude;
         this.longitude = longitude;
         this.image=image;
+        this.password=password;
         this.list_services = list_services;
+        this.type=type;
     }
 
     public String getId() {
-        return id;
+        return user_id;
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.user_id = id;
     }
 
     public String getName() {

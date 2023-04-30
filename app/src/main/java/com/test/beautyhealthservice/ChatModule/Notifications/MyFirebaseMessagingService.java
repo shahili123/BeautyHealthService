@@ -6,21 +6,13 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.widget.Toast;
-
 import androidx.core.app.NotificationCompat;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.test.beautyhealthservice.ChatModule.MessageActivity;
-import com.test.beautyhealthservice.MainActivity;
 import com.test.beautyhealthservice.R;
 
 

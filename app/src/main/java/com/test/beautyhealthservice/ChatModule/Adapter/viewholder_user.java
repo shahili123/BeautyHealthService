@@ -28,22 +28,21 @@ import java.util.List;
 
 public class viewholder_user extends RecyclerView.Adapter<viewholder_user.ViewHolder> {
 
-    private Context mContext;
+    private Context _context;
     private List<Users> list;
     private boolean ischat;
-
     String theLastMessage;
 
-    public viewholder_user(Context mContext, List<Users> _list, boolean ischat){
+    public viewholder_user(Context context, List<Users> _list, boolean ischat){
         this.list = _list;
-        this.mContext = mContext;
+        this._context = context;
         this.ischat = ischat;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.list_layout_chats, parent, false);
+        View view = LayoutInflater.from(_context).inflate(R.layout.list_layout_chats, parent, false);
         return new ViewHolder(view);
     }
 
@@ -64,11 +63,10 @@ public class viewholder_user extends RecyclerView.Adapter<viewholder_user.ViewHo
             @Override
             public void onClick(View view) {
 
-
-                    Intent intent = new Intent(mContext, MessageActivity.class);
+                    Intent intent = new Intent(_context, MessageActivity.class);
                     intent.putExtra("receiver_id", list.get(position).getUser_id());
                     intent.putExtra("token", list.get(position).getToken());
-                    mContext.startActivity(intent);
+                    _context.startActivity(intent);
             }
         });
     }
@@ -109,11 +107,11 @@ public class viewholder_user extends RecyclerView.Adapter<viewholder_user.ViewHo
 
                     Chat chat = snapshot.getValue(Chat.class);
                    if ( chat != null) {
-                        if (chat.getReceiver().equals(Helper.GetData(mContext,"user_id")) && chat.getSender().equals(userid) ||
-                                chat.getReceiver().equals(userid) && chat.getSender().equals(Helper.GetData(mContext,"user_id"))) {
+                        if (chat.getReceiver().equals(Helper.GetData(_context,"user_id")) && chat.getSender().equals(userid) ||
+                                chat.getReceiver().equals(userid) && chat.getSender().equals(Helper.GetData(_context,"user_id"))) {
                             theLastMessage = chat.getMessage();
                             if(!chat.isIsseen()){
-                                if(chat.getReceiver().equals(Helper.GetData(mContext,"user_id"))){
+                                if(chat.getReceiver().equals(Helper.GetData(_context,"user_id"))){
                                     unread_messages++;
                                 }
 

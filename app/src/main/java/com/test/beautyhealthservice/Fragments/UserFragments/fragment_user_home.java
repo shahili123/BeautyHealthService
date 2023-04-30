@@ -6,20 +6,31 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.squareup.picasso.Picasso;
 import com.test.beautyhealthservice.BSpecialistModel;
 import com.test.beautyhealthservice.Helper;
 import com.test.beautyhealthservice.R;
+import com.test.beautyhealthservice.viewholder_beauty_specialist;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class fragment_user_home extends Fragment {
 
@@ -31,11 +42,12 @@ public class fragment_user_home extends Fragment {
 
     TextView txt_username;
     EditText txt_search;
-    ImageView img_user,btn_hair_style,btn_hair_spa,btn_colouring,btn_facial,btn_eyebrows,btn_massage;
+    ImageView btn_hair_style,btn_hair_spa,btn_colouring,btn_facial,btn_eyebrows,btn_massage;
 
-
+    CircleImageView image_user;
+    DatabaseReference databaseReference;
     ArrayList<BSpecialistModel> list_beauty_specialist = new ArrayList<>();
-
+    viewholder_beauty_specialist adapter;
     private LinearLayoutManager linearLayoutManager;
     RecyclerView recyclerView;
 
@@ -61,9 +73,16 @@ public class fragment_user_home extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_user_home, container, false);
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
+
         txt_username=root.findViewById(R.id.txt_user_name);
         txt_search=root.findViewById(R.id.txt_search);
-        img_user=root.findViewById(R.id.image_user);
+        image_user=root.findViewById(R.id.image_user);
+        Picasso.get().load(Helper.GetData(getActivity(),"image_url")).into(image_user);
+        txt_username.setText("Hello, "+Helper.GetData(getActivity(),"name"));
+        recyclerView = (RecyclerView) root.findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         btn_hair_style=root.findViewById(R.id.btn_hair_style);
         btn_hair_style.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,6 +142,7 @@ public class fragment_user_home extends Fragment {
             }
         });
 
+        fetch_beauty_specialist();
         return root;
 
     }
@@ -147,7 +167,47 @@ public class fragment_user_home extends Fragment {
 
     }
 
+    public void fetch_beauty_specialist(){
+        Helper.showLoader(getActivity(),"Please wait we are fetching beauty specialist . . .");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                // parsing all data
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                  String type=  postSnapshot.child("type").getValue(String.class);
 
+                  ArrayList<String > list_services=new ArrayList<>();
+                    for (DataSnapshot services_postSnapshot : postSnapshot.child("list_services").getChildren()) {
+
+                        list_services.add(services_postSnapshot.getValue().toString());
+
+                    }
+
+                    if(type.equals("beauty_specialist")){
+                        list_beauty_specialist.add(new BSpecialistModel(postSnapshot.child("id").getValue(String.class),postSnapshot.child("name").getValue(String.class),postSnapshot.child("email").getValue(String.class),postSnapshot.child("address").getValue(String.class),postSnapshot.child("latitude").getValue(String.class),postSnapshot.child("longitude").getValue(String.class),"",postSnapshot.child("image").getValue(String.class),list_services,postSnapshot.child("type").getValue(String.class)));
+
+                  }
+
+                }
+                if(list_beauty_specialist.size()>0){
+                    Helper.stopLoader();
+                   adapter =new viewholder_beauty_specialist(getActivity(),list_beauty_specialist);
+                    recyclerView.setAdapter(adapter);
+                }
+                else{
+                    Helper.stopLoader();
+                    Toast.makeText(getActivity(),"Something went wrong",Toast.LENGTH_LONG).show();
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 }
 
 

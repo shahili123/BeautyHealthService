@@ -21,6 +21,7 @@ import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -39,6 +40,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class RegisterBeautySpecialistActivity extends AppCompatActivity {
 
@@ -52,32 +54,144 @@ public class RegisterBeautySpecialistActivity extends AppCompatActivity {
     private StorageReference storeage_reference;
     private Uri path;
 
-
+    ArrayList<String> list=new ArrayList<>();
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 100;
     protected LocationManager locationManager;
     private String latitude="",longitude="";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_beauty_specialist);
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
         storeage_reference = FirebaseStorage.getInstance().getReference();
+        mAuth = FirebaseAuth.getInstance();
 
         txt_fullname=findViewById(R.id.txt_fname);
         txt_email=findViewById(R.id.txt_email);
         txt_address=findViewById(R.id.txt_address);
         txt_password=findViewById(R.id.txt_password);
         checkBox_hairstyle=findViewById(R.id.checkbox_hairstyle);
+        checkBox_hairstyle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if(buttonView.isPressed()){
+
+                    if(isChecked){
+
+                      list.add("HairStyle");
+                    }
+                    else{
+                        list.remove("HairStyle");
+
+                    }
+
+                }
+            }
+        });
         checkBox_hairspa=findViewById(R.id.checkbox_hairspa);
+        checkBox_hairspa.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if(buttonView.isPressed()){
+
+                    if(isChecked){
+
+                        list.add("HairSpa");
+                    }
+                    else{
+                        list.remove("HairSpa");
+
+                    }
+
+                }
+            }
+        });
         checkBox_colouring=findViewById(R.id.checkbox_colouring);
+        checkBox_colouring.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if(buttonView.isPressed()){
+
+                    if(isChecked){
+
+                        list.add("Colouring");
+                    }
+                    else{
+                        list.remove("Colouring");
+
+                    }
+
+                }
+            }
+        });
         checkBox_facial=findViewById(R.id.checkbox_facial);
+        checkBox_facial.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if(buttonView.isPressed()){
+
+                    if(isChecked){
+
+                        list.add("Facial");
+                    }
+                    else{
+                        list.remove("Facial");
+
+                    }
+
+                }
+            }
+        });
         checkBox_eyebrow=findViewById(R.id.checkbox_eyebrow);
+        checkBox_eyebrow.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if(buttonView.isPressed()){
+
+                    if(isChecked){
+
+                        list.add("EyeBrow");
+                    }
+                    else{
+                        list.remove("EyeBrow");
+
+                    }
+
+                }
+            }
+        });
         checkBox_massage=findViewById(R.id.checkbox_massage);
+        checkBox_massage.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if(buttonView.isPressed()){
+
+                    if(isChecked){
+
+                        list.add("Massage");
+                    }
+                    else{
+                        list.remove("Massage");
+
+                    }
+
+                }
+            }
+        });
         user_image=findViewById(R.id.image_user);
         user_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 showFileChooser();
+
             }
         });
 
@@ -196,7 +310,7 @@ public class RegisterBeautySpecialistActivity extends AppCompatActivity {
                         public void onSuccess(Uri uri) {
                             Uri downloadUrl = uri;
                             String uploadId = databaseReference.push().getKey();
-                            Users upload = new Users(uploadId,txt_fullname.getEditText().getText().toString().trim(),txt_email.getEditText().getText().toString(),txt_password.getEditText().getText().toString(),txt_address.getEditText().getText().toString(),latitude,longitude, downloadUrl.toString(),"beauty_specialist","");
+                            BSpecialistModel upload = new BSpecialistModel(uploadId,txt_fullname.getEditText().getText().toString().trim(),txt_email.getEditText().getText().toString(),txt_address.getEditText().getText().toString(),latitude,longitude,txt_password.getEditText().getText().toString(), downloadUrl.toString(),list,"beauty_specialist");
                             databaseReference.child(uploadId).setValue(upload);
                             Toast.makeText(getApplicationContext(), "Account created successfully!", Toast.LENGTH_LONG).show();
                             Helper.stopLoader();
