@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.test.beautyhealthservice">
+    package="uk.ac.tees.w9598552.beautyhealthservice">
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -17,31 +17,31 @@
         android:theme="@style/Theme.BeautyHealthService"
         tools:targetApi="31">
         <activity
-            android:name=".BeautySpecialistDetail"
+            android:name="uk.ac.tees.w9598552.beautyhealthservice.BeautySpecialistDetail"
             android:exported="false" />
         <activity
-            android:name=".UserHomePage"
+            android:name="uk.ac.tees.w9598552.beautyhealthservice.UserHomePage"
             android:exported="false" />
         <activity
-            android:name=".BeautySpecialistHomePage"
+            android:name="uk.ac.tees.w9598552.beautyhealthservice.BeautySpecialistHomePage"
             android:exported="false" />
         <activity
-            android:name=".RegisterBeautySpecialistActivity"
+            android:name="uk.ac.tees.w9598552.beautyhealthservice.RegisterBeautySpecialistActivity"
             android:exported="false" />
         <activity
-            android:name=".ChatModule.MessageActivity"
+            android:name="uk.ac.tees.w9598552.beautyhealthservice.ChatModule.MessageActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name="uk.ac.tees.w9598552.beautyhealthservice.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".RegisterActivity"
+            android:name="uk.ac.tees.w9598552.beautyhealthservice.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name="uk.ac.tees.w9598552.beautyhealthservice.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".SplashActivity"
+            android:name="uk.ac.tees.w9598552.beautyhealthservice.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -51,7 +51,7 @@
         </activity>
 
         <service
-            android:name=".ChatModule.Notifications.MyFirebaseMessagingService"
+            android:name="uk.ac.tees.w9598552.beautyhealthservice.ChatModule.Notifications.MyFirebaseMessagingService"
             android:enabled="true"
             android:exported="true">
             <intent-filter>

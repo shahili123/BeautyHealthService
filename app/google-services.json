@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:620186364896:android:c92688821b74889d2f5985",
+        "mobilesdk_app_id": "1:620186364896:android:99860f7f10a3897c2f5985",
         "android_client_info": {
-          "package_name": "com.test.beautyhealthservice"
+          "package_name": "uk.ac.tees.w9598552.beautyhealthservice"
         }
       },
       "oauth_client": [

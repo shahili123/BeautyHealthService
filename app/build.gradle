@@ -6,7 +6,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.test.beautyhealthservice"
+        applicationId "uk.ac.tees.w9598552.beautyhealthservice"
         minSdk 21
         targetSdk 33
         versionCode 1
