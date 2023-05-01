@@ -50,13 +50,15 @@ public class viewholder_beauty_specialist extends RecyclerView.Adapter<viewholde
             public void onClick(View v) {
 
                 Intent intent = new Intent(context, BeautySpecialistDetail.class);
-                intent.putExtra("id", beauty_specialist_list.get(position).getId());
+                intent.putExtra("receiver_id", beauty_specialist_list.get(position).getId());
                 intent.putExtra("name", beauty_specialist_list.get(position).getName());
                 intent.putExtra("email", beauty_specialist_list.get(position).getEmail());
                 intent.putExtra("address", beauty_specialist_list.get(position).getAddress());
                 intent.putExtra("latitude", beauty_specialist_list.get(position).getLatitude());
                 intent.putExtra("longitude", beauty_specialist_list.get(position).getLongitude());
                 intent.putExtra("image", beauty_specialist_list.get(position).getImage());
+                intent.putExtra("token", beauty_specialist_list.get(position).getToken());
+
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }

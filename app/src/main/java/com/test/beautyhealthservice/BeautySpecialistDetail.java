@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+import com.test.beautyhealthservice.ChatModule.MessageActivity;
 
 import java.util.Locale;
 
@@ -18,7 +19,7 @@ public class BeautySpecialistDetail extends AppCompatActivity {
 
     TextView Name,Email,Address;
     ImageView Image,btn_map;
-    String id,latitude,longitude,image;
+    String receiver_id,latitude,longitude,image,token;
     Button btn_messsage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,12 @@ public class BeautySpecialistDetail extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
+                Intent intent = new Intent(BeautySpecialistDetail.this, MessageActivity.class);
+                intent.putExtra("receiver_id", receiver_id);
+                intent.putExtra("name", Name.getText().toString());
+                intent.putExtra("image", image);
+                intent.putExtra("token", token);
+                startActivity(intent);
             }
         });
         btn_map=findViewById(R.id.btn_map);
@@ -49,13 +55,15 @@ public class BeautySpecialistDetail extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if(extras != null){
 
-            id = extras.getString("id");
+            receiver_id = extras.getString("receiver_id");
             Name.setText( extras.getString("name"));
             Email.setText( extras.getString("email"));
             Address.setText( extras.getString("address"));
             latitude = extras.getString("latitude");
             longitude = extras.getString("longitude");
             image = extras.getString("image");
+            token = extras.getString("token");
+
             Picasso.get().load(image).into(Image);
 
 

@@ -53,7 +53,6 @@ public class RegisterBeautySpecialistActivity extends AppCompatActivity {
     ImageView user_image;
     private StorageReference storeage_reference;
     private Uri path;
-
     ArrayList<String> list=new ArrayList<>();
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 100;
     protected LocationManager locationManager;
@@ -310,7 +309,7 @@ public class RegisterBeautySpecialistActivity extends AppCompatActivity {
                         public void onSuccess(Uri uri) {
                             Uri downloadUrl = uri;
                             String uploadId = databaseReference.push().getKey();
-                            BSpecialistModel upload = new BSpecialistModel(uploadId,txt_fullname.getEditText().getText().toString().trim(),txt_email.getEditText().getText().toString(),txt_address.getEditText().getText().toString(),latitude,longitude,txt_password.getEditText().getText().toString(), downloadUrl.toString(),list,"beauty_specialist");
+                            BSpecialistModel upload = new BSpecialistModel(uploadId,txt_fullname.getEditText().getText().toString().trim(),txt_email.getEditText().getText().toString(),txt_address.getEditText().getText().toString(),latitude,longitude,txt_password.getEditText().getText().toString(), downloadUrl.toString(),list,"beauty_specialist","");
                             databaseReference.child(uploadId).setValue(upload);
                             Toast.makeText(getApplicationContext(), "Account created successfully!", Toast.LENGTH_LONG).show();
                             Helper.stopLoader();

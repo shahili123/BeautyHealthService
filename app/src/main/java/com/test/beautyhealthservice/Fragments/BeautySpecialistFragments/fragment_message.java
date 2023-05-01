@@ -36,6 +36,7 @@ public class fragment_message extends Fragment
     ProgressBar progressBar;
     viewholder_user adapter_users;
     ArrayList<Users> list=new ArrayList<>();
+    ArrayList<String> chats_list=new ArrayList<>();
 
     public fragment_message()
     {
@@ -80,6 +81,56 @@ public class fragment_message extends Fragment
         }
 
         return view;
+    }
+
+
+    private void readChats() {
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Chatlist").child(Helper.GetData(getActivity(),"user_id"));
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                list.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+
+                    String chat_ids=snapshot.child("id").getValue(String.class);
+
+
+                    try{
+                        if(Helper.GetData(getActivity(),"user_id").equals(chat_ids)){
+
+                        }
+                        else{
+                            chats_list.add(chat_ids);
+
+                        }
+                    }
+                    catch (Exception e){
+
+                    }
+
+
+                }
+                if(chats_list.size()>0){
+
+
+                    readUsers();
+                }
+                else{
+                    txt_no_users.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.GONE);
+                }
+
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void readUsers() {

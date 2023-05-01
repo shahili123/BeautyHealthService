@@ -17,6 +17,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.test.beautyhealthservice.BSpecialistModel;
+import com.test.beautyhealthservice.ChatModule.Adapter.viewholder_bspecialist_chats;
 import com.test.beautyhealthservice.ChatModule.Adapter.viewholder_user;
 import com.test.beautyhealthservice.Helper;
 import com.test.beautyhealthservice.R;
@@ -34,8 +36,9 @@ public class fragment_user_messages extends Fragment
     private String mParam1;
     private String mParam2;
     ProgressBar progressBar;
-    viewholder_user userAdapter;
-    ArrayList<Users> list=new ArrayList<>();
+    viewholder_bspecialist_chats userAdapter;
+    ArrayList<BSpecialistModel> list=new ArrayList<>();
+    ArrayList<String> chats_list=new ArrayList<>();
 
     public fragment_user_messages()
     {
@@ -74,13 +77,64 @@ public class fragment_user_messages extends Fragment
             progressBar=view.findViewById(R.id.progress_circular);
 
 
-            readUsers();
+           readChats();
         }
         catch (Exception e){
             Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
         }
 
         return view;
+    }
+
+
+
+    private void readChats() {
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Chatlist").child(Helper.GetData(getActivity(),"user_id"));
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                list.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+
+                    String chat_ids=snapshot.child("id").getValue(String.class);
+
+
+                    try{
+                        if(Helper.GetData(getActivity(),"user_id").equals(chat_ids)){
+
+                        }
+                        else{
+                            chats_list.add(chat_ids);
+
+                        }
+                    }
+                    catch (Exception e){
+
+                    }
+
+
+                }
+                if(chats_list.size()>0){
+
+
+                    readUsers();
+                }
+                else{
+                    txt_no_users.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.GONE);
+                }
+
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void readUsers() {
@@ -91,12 +145,21 @@ public class fragment_user_messages extends Fragment
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 list.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Users user = snapshot.getValue(Users.class);
-                    try{
-                        if (!user.getUser_id().equals(Helper.GetData(getActivity(),"user_id"))) {
-                            list.add(user);
-                        }
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    String type=  postSnapshot.child("type").getValue(String.class);
+                    String user_id=  postSnapshot.child("user_id").getValue(String.class);
+                    try {
+                            if (type.equals("beauty_specialist")) {
+                                for(int i = 0; i < chats_list.size(); i++){
+                                    if(chats_list.get(i).equals(user_id)){
+                                        list.add(new BSpecialistModel(user_id, postSnapshot.child("name").getValue(String.class), postSnapshot.child("email").getValue(String.class), postSnapshot.child("address").getValue(String.class), postSnapshot.child("latitude").getValue(String.class), postSnapshot.child("longitude").getValue(String.class), "", postSnapshot.child("image").getValue(String.class), null, postSnapshot.child("type").getValue(String.class), postSnapshot.child("token").getValue(String.class)));
+                                    }
+
+                                }
+
+
+                            }
+
                     }
                     catch (Exception e){
 
@@ -106,7 +169,7 @@ public class fragment_user_messages extends Fragment
                 }
                 if(list.size()>0){
                     recyclerView.setVisibility(View.VISIBLE);
-                    userAdapter = new viewholder_user(getContext(), list, true);
+                    userAdapter = new viewholder_bspecialist_chats(getContext(), list, true);
                     recyclerView.setAdapter(userAdapter);
                     progressBar.setVisibility(View.GONE);
                 }

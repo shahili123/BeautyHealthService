@@ -5,10 +5,10 @@ import java.util.ArrayList;
 public class BSpecialistModel {
 
 
-    String user_id,name,email,address,latitude,longitude,image,password,type;
+    String user_id,name,email,address,latitude,longitude,image,password,type,token;
     ArrayList<String> list_services=new ArrayList<>();
 
-    public BSpecialistModel(String user_id, String name, String email, String address, String latitude, String longitude,String password,String image, ArrayList<String> list_services,String type) {
+    public BSpecialistModel(String user_id, String name, String email, String address, String latitude, String longitude,String password,String image, ArrayList<String> list_services,String type,String token) {
         this.user_id = user_id;
         this.name = name;
         this.email = email;
@@ -19,6 +19,9 @@ public class BSpecialistModel {
         this.password=password;
         this.list_services = list_services;
         this.type=type;
+        this.token=token;
+
+
     }
 
     public String getId() {
@@ -75,6 +78,30 @@ public class BSpecialistModel {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public ArrayList<String> getList_services() {

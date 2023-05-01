@@ -23,11 +23,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:textColorLink="#0f72f1"
             android:background="@drawable/background_right"
             android:padding="8dp"
             android:text="hello"
             android:textColor="#fff"
+            android:textColorLink="#0f72f1"
             android:textSize="14sp" />
 
         <TextView

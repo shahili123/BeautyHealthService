@@ -29,6 +29,9 @@
             android:name=".RegisterBeautySpecialistActivity"
             android:exported="false" />
         <activity
+            android:name=".ChatModule.MessageActivity"
+            android:exported="false" />
+        <activity
             android:name=".LoginActivity"
             android:exported="false" />
         <activity

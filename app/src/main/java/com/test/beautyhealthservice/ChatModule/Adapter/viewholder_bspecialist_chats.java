@@ -27,14 +27,16 @@ import com.test.beautyhealthservice.Users;
 
 import java.util.List;
 
-public class viewholder_user extends RecyclerView.Adapter<viewholder_user.ViewHolder> {
+import de.hdodenhof.circleimageview.CircleImageView;
+
+public class viewholder_bspecialist_chats extends RecyclerView.Adapter<viewholder_bspecialist_chats.ViewHolder> {
 
     private Context _context;
-    private List<Users> list;
+    private List<BSpecialistModel> list;
     private boolean ischat;
     String theLastMessage;
 
-    public viewholder_user(Context context, List<Users> _list, boolean ischat){
+    public viewholder_bspecialist_chats(Context context, List<BSpecialistModel> _list, boolean ischat){
         this.list = _list;
         this._context = context;
         this.ischat = ischat;
@@ -50,11 +52,11 @@ public class viewholder_user extends RecyclerView.Adapter<viewholder_user.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
-        holder.username.setText(list.get(position).getFull_name());
-        Picasso.get().load(list.get(position).getImage_url()).into(holder.profile_image);
+        holder.username.setText(list.get(position).getName());
+        Picasso.get().load(list.get(position).getImage()).into(holder.profile_image);
 
         if (ischat){
-            lastMessage(list.get(position).getUser_id(), holder.last_msg,holder.txt_unread,holder.cardView);
+            lastMessage(list.get(position).getId(), holder.last_msg,holder.txt_unread,holder.cardView);
         } else {
             holder.last_msg.setVisibility(View.GONE);
         }
@@ -64,10 +66,12 @@ public class viewholder_user extends RecyclerView.Adapter<viewholder_user.ViewHo
             @Override
             public void onClick(View view) {
 
-                    Intent intent = new Intent(_context, MessageActivity.class);
-                    intent.putExtra("receiver_id", list.get(position).getUser_id());
-                    intent.putExtra("token", list.get(position).getToken());
-                    _context.startActivity(intent);
+                Intent intent = new Intent(_context, MessageActivity.class);
+                intent.putExtra("receiver_id", list.get(position).getId());
+                intent.putExtra("token", list.get(position).getToken());
+                intent.putExtra("name", list.get(position).getName());
+                intent.putExtra("image", list.get(position).getImage());
+                _context.startActivity(intent);
             }
         });
     }
@@ -80,7 +84,7 @@ public class viewholder_user extends RecyclerView.Adapter<viewholder_user.ViewHo
     public  class ViewHolder extends RecyclerView.ViewHolder{
 
         public TextView username;
-        public ImageView profile_image;
+        public CircleImageView profile_image;
         private TextView last_msg;
         private TextView txt_unread;
         private CardView cardView;
@@ -107,7 +111,7 @@ public class viewholder_user extends RecyclerView.Adapter<viewholder_user.ViewHo
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
 
                     Chat chat = snapshot.getValue(Chat.class);
-                   if ( chat != null) {
+                    if ( chat != null) {
                         if (chat.getReceiver().equals(Helper.GetData(_context,"user_id")) && chat.getSender().equals(userid) ||
                                 chat.getReceiver().equals(userid) && chat.getSender().equals(Helper.GetData(_context,"user_id"))) {
                             theLastMessage = chat.getMessage();

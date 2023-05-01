@@ -10,8 +10,10 @@ public class Users {
 
     String user_id,full_name,email,password,address,latitude,longitude,image_url,type,token;
 
+    public Users() {
+    }
 
-    public Users(String user_id, String full_name, String email, String password,String address, String latitude, String longitude, String image_url,String type,String token) {
+    public Users(String user_id, String full_name, String email, String password, String address, String latitude, String longitude, String image_url, String type, String token) {
 
         this.user_id=user_id;
         this.full_name = full_name;

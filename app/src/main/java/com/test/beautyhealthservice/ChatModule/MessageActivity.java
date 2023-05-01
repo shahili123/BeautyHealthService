@@ -9,6 +9,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +22,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 import com.test.beautyhealthservice.ChatModule.Adapter.viewholder_messages;
 import com.test.beautyhealthservice.ChatModule.Notifications.APIService;
 import com.test.beautyhealthservice.ChatModule.Notifications.Client;
@@ -31,10 +33,13 @@ import com.test.beautyhealthservice.Helper;
 import com.test.beautyhealthservice.R;
 
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -51,7 +56,7 @@ public class MessageActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     Intent intent;
     ValueEventListener seenListener;
-    String receiver_id,receiver_token;
+    String receiver_id,receiver_token,receiver_image_url;
     APIService apiService;
     boolean notify = false;
     @Override
@@ -66,7 +71,9 @@ public class MessageActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
+        androidx.appcompat.widget.Toolbar toolbar =findViewById(R.id.toolbar);
+        CircleImageView user_image=toolbar.findViewById(R.id.image_user);
+        TextView txt_username=toolbar.findViewById(R.id.username);
         apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
 
         recyclerView = findViewById(R.id.recycler_view);
@@ -83,6 +90,9 @@ public class MessageActivity extends AppCompatActivity {
         intent = getIntent();
         receiver_id = intent.getStringExtra("receiver_id");
         receiver_token = intent.getStringExtra("token");
+        receiver_image_url=intent.getStringExtra("image");
+        Picasso.get().load(receiver_image_url).into(user_image);
+        txt_username.setText(intent.getStringExtra("name"));
 
         btn_send.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,15 +175,14 @@ public class MessageActivity extends AppCompatActivity {
 
         final String msg = message;
 
-        sendNotifiaction(receiver_token, Helper.GetData(MessageActivity.this,"first_name"), msg);
+        sendNotifiaction(receiver_token, Helper.GetData(MessageActivity.this,"name"),receiver_image_url, msg);
 
 
     }
 
-    private void sendNotifiaction(String receiver_token, final String username, final String message){
+    private void sendNotifiaction(String receiver_token, final String username,String image_url, final String message){
 
-                    Data data = new Data(Helper.GetData(MessageActivity.this,"user_id"), R.mipmap.ic_launcher, username+": "+message, "New Message",
-                            receiver_id,"message");
+                    Data data = new Data(Helper.GetData(MessageActivity.this,"user_id"),username, username+": "+message,image_url, "New Message", receiver_id);
 
                     Sender sender = new Sender(data, receiver_token);
 

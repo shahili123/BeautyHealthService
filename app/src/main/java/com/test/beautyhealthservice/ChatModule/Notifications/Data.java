@@ -1,39 +1,56 @@
 package com.test.beautyhealthservice.ChatModule.Notifications;
 
 public class Data {
-    private String user;
+    private String sender_id;
     private int icon;
     private String body;
     private String title;
-    private String sented;
-    private String notification_type;
-
-    public Data(String user, int icon, String body, String title, String sented,String notification_type) {
-        this.user = user;
-        this.icon = icon;
+    private String receiver_id;
+    private String sender_name;
+    private String image_url;
+    public Data(String sender_id,String sender_name, String body,String image_url, String title, String receiver_id) {
+        this.sender_id = sender_id;
+        this.sender_name=sender_name;
         this.body = body;
+        this.image_url=image_url;
         this.title = title;
-        this.sented = sented;
-        this.notification_type=notification_type;
+        this.receiver_id = receiver_id;
     }
 
     public Data() {
     }
 
-    public String getUser() {
-        return user;
+
+    public String getSender_id() {
+        return sender_id;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setSender_id(String sender_id) {
+        this.sender_id = sender_id;
     }
 
-    public int getIcon() {
-        return icon;
+    public String getSender_name() {
+        return sender_name;
     }
 
-    public void setIcon(int icon) {
-        this.icon = icon;
+    public void setSender_name(String sender_name) {
+        this.sender_name = sender_name;
+    }
+
+    public String getImage_url() {
+        return image_url;
+    }
+
+    public void setImage_url(String image_url) {
+        this.image_url = image_url;
+    }
+
+    public String getReceiver_id() {
+        return receiver_id;
+    }
+
+    public void setReceiver_id(String receiver_id) {
+        this.receiver_id = receiver_id;
     }
 
     public String getBody() {
@@ -52,19 +69,6 @@ public class Data {
         this.title = title;
     }
 
-    public String getSented() {
-        return sented;
-    }
 
-    public void setSented(String sented) {
-        this.sented = sented;
-    }
 
-    public String getNotification_type() {
-        return notification_type;
-    }
-
-    public void setNotification_type(String notification_type) {
-        this.notification_type = notification_type;
-    }
 }

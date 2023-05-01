@@ -88,12 +88,14 @@ public class fragment_user_home extends Fragment {
             @Override
             public void onClick(View v) {
 
+                fetch_beauty_specialist_by_category("HairStyle");
             }
         });
         btn_hair_spa=root.findViewById(R.id.btn_hair_spa);
         btn_hair_spa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                fetch_beauty_specialist_by_category("HairSpa");
 
             }
         });
@@ -101,6 +103,7 @@ public class fragment_user_home extends Fragment {
         btn_colouring.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                fetch_beauty_specialist_by_category("Colouring");
 
             }
         });
@@ -108,6 +111,7 @@ public class fragment_user_home extends Fragment {
         btn_facial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                fetch_beauty_specialist_by_category("Facial");
 
             }
         });
@@ -115,6 +119,7 @@ public class fragment_user_home extends Fragment {
         btn_massage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                fetch_beauty_specialist_by_category("Massage");
 
             }
         });
@@ -122,6 +127,7 @@ public class fragment_user_home extends Fragment {
         btn_eyebrows.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                fetch_beauty_specialist_by_category("EyeBrow");
 
             }
         });
@@ -174,6 +180,49 @@ public class fragment_user_home extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 // parsing all data
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                    String type=  postSnapshot.child("type").getValue(String.class);
+
+                    ArrayList<String > list_services=new ArrayList<>();
+                    for (DataSnapshot services_postSnapshot : postSnapshot.child("list_services").getChildren()) {
+
+                        list_services.add(services_postSnapshot.getValue().toString());
+
+                    }
+
+                    if(type.equals("beauty_specialist")){
+                        list_beauty_specialist.add(new BSpecialistModel(postSnapshot.child("user_id").getValue(String.class),postSnapshot.child("name").getValue(String.class),postSnapshot.child("email").getValue(String.class),postSnapshot.child("address").getValue(String.class),postSnapshot.child("latitude").getValue(String.class),postSnapshot.child("longitude").getValue(String.class),"",postSnapshot.child("image").getValue(String.class),list_services,postSnapshot.child("type").getValue(String.class),postSnapshot.child("token").getValue(String.class)));
+
+                    }
+
+                }
+                if(list_beauty_specialist.size()>0){
+                    Helper.stopLoader();
+                    adapter =new viewholder_beauty_specialist(getActivity(),list_beauty_specialist);
+                    recyclerView.setAdapter(adapter);
+                }
+                else{
+                    Helper.stopLoader();
+                    Toast.makeText(getActivity(),"Something went wrong",Toast.LENGTH_LONG).show();
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    public void fetch_beauty_specialist_by_category(String category){
+        Helper.showLoader(getActivity(),"Please wait we are fetching beauty specialist . . .");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                list_beauty_specialist.clear();
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                   String type=  postSnapshot.child("type").getValue(String.class);
 
                   ArrayList<String > list_services=new ArrayList<>();
@@ -184,7 +233,11 @@ public class fragment_user_home extends Fragment {
                     }
 
                     if(type.equals("beauty_specialist")){
-                        list_beauty_specialist.add(new BSpecialistModel(postSnapshot.child("id").getValue(String.class),postSnapshot.child("name").getValue(String.class),postSnapshot.child("email").getValue(String.class),postSnapshot.child("address").getValue(String.class),postSnapshot.child("latitude").getValue(String.class),postSnapshot.child("longitude").getValue(String.class),"",postSnapshot.child("image").getValue(String.class),list_services,postSnapshot.child("type").getValue(String.class)));
+
+                        if(list_services.contains(category)){
+                            list_beauty_specialist.add(new BSpecialistModel(postSnapshot.child("id").getValue(String.class),postSnapshot.child("name").getValue(String.class),postSnapshot.child("email").getValue(String.class),postSnapshot.child("address").getValue(String.class),postSnapshot.child("latitude").getValue(String.class),postSnapshot.child("longitude").getValue(String.class),"",postSnapshot.child("image").getValue(String.class),list_services,postSnapshot.child("type").getValue(String.class),postSnapshot.child("token").getValue(String.class)));
+
+                        }
 
                   }
 
@@ -196,7 +249,8 @@ public class fragment_user_home extends Fragment {
                 }
                 else{
                     Helper.stopLoader();
-                    Toast.makeText(getActivity(),"Something went wrong",Toast.LENGTH_LONG).show();
+                    recyclerView.setAdapter(null);
+                    Toast.makeText(getActivity(),"Not Found",Toast.LENGTH_LONG).show();
                 }
 
 

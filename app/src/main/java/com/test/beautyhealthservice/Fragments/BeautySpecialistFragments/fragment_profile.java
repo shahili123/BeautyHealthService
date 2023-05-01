@@ -34,6 +34,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 import com.test.beautyhealthservice.Helper;
+import com.test.beautyhealthservice.LoginActivity;
 import com.test.beautyhealthservice.R;
 
 import java.io.IOException;
@@ -151,7 +152,14 @@ public class fragment_profile extends Fragment {
 
             }
         });
-
+        root.findViewById(R.id.btn_logout).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+                Helper.PutData(getActivity(),"user_id",null);
+                startActivity(new Intent(getActivity(), LoginActivity.class));
+            }
+        });
         return root;
     }
 
