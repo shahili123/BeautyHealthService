@@ -176,11 +176,10 @@ public class fragment_user_home extends Fragment {
 
         final String searchStrLowerCase = text.toString().toLowerCase();
         ArrayList<BSpecialistModel> matchValues = new ArrayList<>();
-
             for (BSpecialistModel dataItem : list_beauty_specialist) {
 
                 if (dataItem.getName().toLowerCase().startsWith(searchStrLowerCase)) {
-                    
+
                     matchValues.add(dataItem);
 
                 }
