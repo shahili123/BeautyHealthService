@@ -1,5 +1,7 @@
 package uk.ac.tees.w9598552.beautyhealthservice.Fragments.UserFragments;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +52,6 @@ public class fragment_user_home extends Fragment {
     viewholder_beauty_specialist adapter;
     private LinearLayoutManager linearLayoutManager;
     RecyclerView recyclerView;
-
     public fragment_user_home() {
     }
 
@@ -132,6 +133,24 @@ public class fragment_user_home extends Fragment {
             }
         });
 
+        txt_search = root.findViewById(R.id.txt_search);
+        txt_search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                filter(s.toString());
+            }
+        });
+
         FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
             @Override
             public void onComplete(@NonNull Task<String> task) {
@@ -153,9 +172,21 @@ public class fragment_user_home extends Fragment {
 
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
+    private void filter(String text) {
+
+        final String searchStrLowerCase = text.toString().toLowerCase();
+        ArrayList<BSpecialistModel> matchValues = new ArrayList<>();
+
+            for (BSpecialistModel dataItem : list_beauty_specialist) {
+
+                if (dataItem.getName().toLowerCase().startsWith(searchStrLowerCase)) {
+                    
+                    matchValues.add(dataItem);
+
+                }
+            }
+        adapter.filterList(matchValues);
+
     }
 
     public void update_token(String token){
